@@ -1,1 +1,4 @@
 # AWS-KodeKloud-Challenges
+**Using CLI:**
+**Challenge 1:** Create key pair
+**Command:** aws ec2 create-key-pair --key-name devops-kp --key-type rsa --query 'KeyMaterial' --output text > devops-kp.pem
