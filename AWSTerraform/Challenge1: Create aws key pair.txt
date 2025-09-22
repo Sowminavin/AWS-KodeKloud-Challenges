@@ -1,0 +1,19 @@
+main.tf
+**************
+resource "tls_private_key" "xfusion-kp" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "xfusion-kp" {
+    key_name = "xfusion-kp"
+    public_key = tls_private_key.xfusion-kp.public_key_openssh
+}
+
+resource "local_file" "xfusion-kp"{
+    content = tls_private_key.xfusion-kp.private_key_pem
+    filename = "/home/bob/xfusion-kp.pem"
+}
+**************
+provider.tf
+add providers called aws, tls and local
