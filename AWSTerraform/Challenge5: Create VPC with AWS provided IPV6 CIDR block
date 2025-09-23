@@ -1,4 +1,5 @@
 Create VPC with AWS provided IPV6 CIDR block
+Note: Even if u want to create IPV6 only VPC, you need to give cidr_block parameter with some value (minimal range) that meets AWS requirements
 
 resource "aws_vpc" "datacenter-vpc" {
     cidr_block = "10.0.0.0/16"
@@ -7,7 +8,7 @@ resource "aws_vpc" "datacenter-vpc" {
         Name = "datacenter-vpc"
     }
 }
-
+--------------------
 provider.tf
 terraform {
   required_providers {
