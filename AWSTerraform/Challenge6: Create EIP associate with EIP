@@ -1,0 +1,21 @@
+For this task, allocate an Elastic IP address named datacenter-eip using Terraform.
+EIP is for: Hosting a public-facing web server.
+Ensuring consistent IP for DNS records.
+Associating with a NAT gateway for outbound internet access from private subnets.
+
+resource "aws_eip" "datacenter-eip" {
+    domain = "vpc"
+    tags = {
+        Name = "datacenter-eip"
+    }
+}
+
+and the provider.tf file 
+terraform {
+required_provider{
+aws = {
+source = ""
+version = ""
+}}}
+provider "aws" {
+region = "us-east-1"}
