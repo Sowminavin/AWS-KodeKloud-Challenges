@@ -1,0 +1,30 @@
+Create AMI from eisting ec2 instance
+# Provision EC2 instance
+resource "aws_instance" "ec2" {
+  ami           = "ami-0c101f26f147fa7fd"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [
+    "sg-e85aa0200d01f379b"
+  ]
+ 
+  tags = {
+    Name = "nautilus-ec2"
+  }
+}
+ 
+resource "aws_ami_from_instance" "ami" {
+  name = "nautilus-ec2-ami"
+  source_instance_id = aws_instance.ec2.id
+}
+
+provider.tf
+terraform {
+required_providers{
+aws = {
+source = ""
+version= ""
+}
+} }
+provider "aws" {
+region = "us-east-1"
+}
