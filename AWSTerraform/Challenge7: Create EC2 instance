@@ -1,0 +1,56 @@
+create ec2 instance The name of the instance must be xfusion-ec2.
+Use the Amazon Linux ami-0c101f26f147fa7fd to launch this instance.
+The Instance type must be t2.micro.
+Create a new RSA key named xfusion-kp.
+Attach the default (available by default) security group.
+---------------------------------------
+data "aws_vpc" "default" {
+    default = true
+}
+
+data "aws_security_group" "default" {
+    name= "default"
+    vpc_id = data.aws_vpc.default.id
+}
+
+resource "tls_private_key" "xfusion-kp" {
+    algorithm ="RSA"
+    rsa_bits = 4096
+}
+
+resource "aws_key_pair" "xfusion-kp" {
+    key_name = "xfusion-kp"
+    public_key = tls_private_key.xfusion-kp.public_key_openssh
+}
+
+resource "aws_instance" "xfusion-ec2" {
+    instance_type = "t2.micro"
+    ami = "ami-0c101f26f147fa7fd"
+    key_name= aws_key_pair.xfusion-kp.key_name
+    tags = {
+        Name = "xfusion-ec2"
+    }
+    vpc_security_group_ids = [data.aws_security_group.default.id]
+}
+===========================
+provider.tf 
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.91.0"
+    }
+  tls ={
+    source= ""
+    version = ""
+  }
+}
+}
+
+provider "aws" {
+region = "us-east-1"
+}
+provider "tls" {}
+
+}
