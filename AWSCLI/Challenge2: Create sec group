@@ -1,0 +1,17 @@
+1. create a security group under default VPC with the following requirements:
+Name of the security group is xfusion-sg.
+The description must be Security group for Nautilus App Servers
+-------
+aws ec2 create-security-group --description "Security group for Nautilus App Servers" --group-name "xfusion-sg"
+aws ec2 describe-security-groups
+
+2. Add the inbound rule of type HTTP, with port range of 80. Enter the source CIDR range of 0.0.0.0/0
+--------
+aws ec2 authorize-security-group-ingress --group-id sg-063fb0995839533b9 --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+3. Add another inbound rule of type SSH, with port range of 22. Enter the source CIDR range of 0.0.0.0/0.
+-------
+aws ec2 authorize-security-group-ingress --group-id sg-063fb0995839533b9 --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+for egress also , same way
+aws ec2 authorize-security-group-egress
