@@ -1,0 +1,22 @@
+Create a VPC named xfusion-vpc in us-east-1 region with 192.168.0.0/24 IPv4 CIDR using terraform.
+
+resource "aws_vpc" "xfusion-vpc" {
+    cidr_block = "192.168.0.0/24"
+    tags = {
+        Name = "xfusion-vpc"
+    }
+}
+---------------------
+provider.tf
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.91.0"
+    }
+  }
+}
+
+provider "aws" {
+  region  = "us-east-1"
+}
